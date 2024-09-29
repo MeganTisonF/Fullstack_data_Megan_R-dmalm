@@ -171,3 +171,4 @@ cython_debug/
 
 cleaned_data/
 raw_data/
+youtube_data.db
