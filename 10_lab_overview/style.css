@@ -1,3 +1,36 @@
-h1{
-    color:blue
+:root{
+    --color-dark:#0B0F19 ;
+    --color-gray-600: #9397AD;
+    --color-gray-300:#E2E5F1;
+    --color-diffrentgray: #585C7B;
+    --color-lightergrey: #B4B7C9;
+    --color-gray-700: #565973;
+
+    --color-white: #FFFFFF;
+
 }
+
+[data-testid|="stHeader"]{
+    display: none;
+}
+
+
+.custom-header {
+    color: rgb(0, 0, 0); 
+    font-size: 3em; 
+    text-align: center;
+    padding-bottom: 2rem;
+
+}
+
+.p-h{
+    color: #565973;
+    padding-bottom: 2rem;
+    text-align: center;
+}
+
+
+
+
+
+

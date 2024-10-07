@@ -18,10 +18,19 @@ def layout():
     sida1, sida2, sida3, sida4 = st.tabs(["Översikt", "Publik", "Videoinnehåll", "Orter"])
 
     with sida1:        
-         st.header("The data driven youtuber")
-         st.markdown("Denna dashboard syftar till att utforska och analysera datan från min YouTube-kanal. Genom att använda olika visualiseringar och KPI (Key Performance Indicators) kan jag få en djupare förståelse för hur mina videor presterar, vilka målgrupper som engagerar sig mest, och vilka typer av innehåll som resonerar bäst med mina tittare.")
-
-
+         st.markdown(
+            """
+            <div class="custom-tab-1">
+            <h1 class="custom-header">The data driven youtuber</h1>
+            <p class="p-h">Denna dashboard syftar till att utforska och analysera datan från min YouTube-kanal. Genom att använda olika visualiseringar och KPI (Key Performance Indicators) kan jag få en djupare förståelse för hur mina videor presterar, vilka målgrupper som engagerar sig mest, och vilka typer av innehåll som resonerar bäst med mina tittare.</p>
+            </div>
+            """, unsafe_allow_html=True
+            )
+         st.image("10_lab_overview/images/KPI.jpg", use_column_width=True)
+         
+         
+         
+         
     with sida2:
          st.header("Publikens KPier baserat på kön och ålder")
          age_kpi.display_gender_age()
@@ -40,8 +49,21 @@ def layout():
         st.header("KPIer för orter")
         stad_kpi.display_stad()
     
+   
+    read_css()
+
+def read_css():
+    css_path = Path(__file__).parent / "style.css"
+
+    with open(css_path) as css:
+        st.markdown(f"<style> {css.read()}</style>", unsafe_allow_html=True)
+
+
+
 
 if __name__ == "__main__":
     layout()
+
+
 
 
