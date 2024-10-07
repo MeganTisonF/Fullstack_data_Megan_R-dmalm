@@ -2,6 +2,8 @@ DESC;
 
 
 WITH 
+/*Det skapar två temporära tabeller: en med data från datum.tabelldata (utan den första raden) och en annan med data från datum.totalt.Det väljer och formaterar datumen, hämtar visningsantal och visningstid*/
+/*Det kombinerar dessa data med en LEFT JOIN för att få all information från date_total och eventuell matchande information från date_table, vilket ger en översikt över visningar och visningstid för de olika datumen*/
 date_table AS (
     SELECT * FROM datum.tabelldata OFFSET 1
 ),
