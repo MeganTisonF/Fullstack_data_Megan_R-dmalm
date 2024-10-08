@@ -34,7 +34,12 @@ SELECT
 	Visningar
 FROM
 	innehall.totalt);
-	
+
+
+
+SELECT * FROM marts.views_per_date;
+
+
 
 SELECT
 	*
@@ -44,7 +49,34 @@ WHERE
 	table_schema = 'marts';
 	
 
-SELECT * FROM marts.views_per_date;
+
+
+
+CREATE TABLE IF NOT EXISTS marts.content_screens AS
+WITH diagram_data AS (
+    SELECT 
+        Enhetstyp, 
+        COUNT(*) AS total_rows,  
+        SUM(Visningar) AS total_visningar  
+    FROM enhetstyp.diagramdata
+    GROUP BY Enhetstyp
+)
+SELECT 
+    Enhetstyp,
+    total_rows,
+    total_visningar
+FROM diagram_data
+ORDER BY total_visningar DESC;
+
+  
+SELECT * FROM marts.content_screens;
+
+
+
+
+
+
+	
 
 
 
@@ -54,6 +86,7 @@ CREATE TABLE IF NOT EXISTS marts.content_stader_viewers AS (
         COALESCE("Ort", 'Okänd ort') AS "Ort",
         "Visningar",
         "Visningstid (timmar)"
+        
     FROM
         stader.tabelldata
 );
@@ -62,6 +95,11 @@ CREATE TABLE IF NOT EXISTS marts.content_stader_viewers AS (
 
 
 SELECT * FROM marts.content_stader_viewers;
+
+
+
+
+
 
 
 
@@ -81,6 +119,13 @@ ORDER BY
    
    SELECT * FROM marts.content_gender_viewers;
 
+  
+
+  
+  
+  
+  
+  
 
 CREATE TABLE IF NOT EXISTS marts.content_age_viewers AS (
 SELECT 
@@ -99,8 +144,9 @@ FROM
   
   
   
+
   
-  
+
 
 
 

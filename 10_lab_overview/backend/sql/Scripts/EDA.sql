@@ -1,9 +1,11 @@
 DESC;
 
 
-WITH 
+
 /*Det skapar två temporära tabeller: en med data från datum.tabelldata (utan den första raden) och en annan med data från datum.totalt.Det väljer och formaterar datumen, hämtar visningsantal och visningstid*/
 /*Det kombinerar dessa data med en LEFT JOIN för att få all information från date_total och eventuell matchande information från date_table, vilket ger en översikt över visningar och visningstid för de olika datumen*/
+
+WITH 
 date_table AS (
     SELECT * FROM datum.tabelldata OFFSET 1
 ),
@@ -22,7 +24,15 @@ LEFT JOIN
 ON
     tot.datum = tab.datum;
    
-
+   
+   
+   
+   
+   
+   
+/*Räknar antalet rader ( total_rows) och sommarvisningarna ( total_visningar) för varje typ av enhet i tabellen enhetstyp.diagramdata */
+/*Hämtar resultatet från CTE(Enhetstyp)
+och sorterar det baserat på det totala antalet visningar i fallande ordning, vilket visar vilken enhetstyp som har flest visningar överst*/
    
   
 WITH diagram_data AS (
@@ -45,11 +55,17 @@ ORDER BY total_visningar DESC;
 
 
 
-   SELECT
+
+/*Hämtar alla kolumner utom kolumnen Innehåll från tabtabelldata*/
+/*Den sorterar raderna i tabellen baserat påvisningstid (timmar)*/
+
+SELECT
 	* EXCLUDE (Innehåll)
 FROM
 	innehall.tabelldata
 ORDER BY "visningstid (timmar)" DESC;
+
+
 
 
 
@@ -61,6 +77,9 @@ FROM
     innehall.totalt;
 
 
+   
+/*Skapar två temporära tabeller som sedan hämtas från tittare.tabelldata_kon/tittar.tabelldata_alder*/
+/*Visar resultat baserat på tittarnas ålder*/  
    
 WITH age_table AS (
 SELECT
@@ -77,6 +96,12 @@ SELECT
 FROM
 	gender_table;
 
+
+
+
+
+/*Skapar två temporära tabeller som sedan hämtas från tittare.tabelldata_kon/tittar.tabelldata_alder*/
+/*Visar resultat baserat på kön*/
 
 WITH gender_table AS (
 SELECT
@@ -96,26 +121,14 @@ FROM
 
 
 
-WITH cities_table AS (
-SELECT
-	*
-FROM
-	stader.tabelldata),
-date_table AS (
-SELECT
-	*
-FROM
-	stader.totalt)
-SELECT
-	*
-FROM
-	date_table
 	
 	
-	
-SELECT * FROM stader.tabelldata LIMIT 1;
 
 
+
+
+
+/*Kombinerar data från två källor: en som summerar visningar per datum och en som listar visningsinformation per stad, och presenterar detta i en sammanställd vy.*/
 
 WITH 
 cities_table AS (

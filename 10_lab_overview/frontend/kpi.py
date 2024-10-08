@@ -4,7 +4,7 @@ from utils.query_database import QueryDatabase
 
 class ContentKPI:
     def __init__(self) -> None:
-        self._content = QueryDatabase("SELECT * FROM marts.content_view_time;").df
+        self._content = QueryDatabase("SELECT * FROM marts.content_view_time").df
 
     def display_content(self):
         df = self._content
@@ -28,7 +28,7 @@ class ContentKPI:
 
 class StaderKPI:
     def __init__(self) -> None:
-        # Använd COALESCE för att ersätta NULL-värden med "Okänd Ort"
+        
         query = """
         SELECT
             COALESCE("Ort", 'Okänd ort') AS "Ort",
@@ -40,13 +40,10 @@ class StaderKPI:
         self.stader_content = QueryDatabase(query).df
     
     def display_stad(self):
-        # Visa innehållet endast när sidan "Stad" är vald
-        st.write(self.stader_content)
-
+       
         stad_df = self.stader_content
 
-
-        # Lägger till ett tomt alternativ som första val
+        
         stad_options = ["Alternativ"] + list(stad_df["Ort"].unique())
 
         selected_stad = st.selectbox("Välj en ortkatergori:", stad_options)
@@ -54,7 +51,7 @@ class StaderKPI:
         if selected_stad:
             filtered_stad_df = stad_df[stad_df["Ort"] == selected_stad]
 
-            # Visa data för den valda staden
+            
             if not filtered_stad_df.empty:
               st.markdown(f"### Data för ortskategori: {selected_stad}")
               st.write(f"- Antal visningar: {filtered_stad_df['Visningar'].values[0]}")
@@ -65,7 +62,7 @@ class StaderKPI:
 
 
 
-# Din klass för att visa KPI:er baserat på kön och ålder
+
 class AgeGenderKPI:
     def __init__(self) -> None:
         self._gender_content = QueryDatabase("SELECT * FROM marts.content_gender_viewers").df
@@ -75,18 +72,17 @@ class AgeGenderKPI:
         gender_df = self._gender_content
         age_df = self._age_content
 
-        # Låter användaren välja en viss könskategori från selectbox
+        
         st.markdown("##### (KPI) analys baserat på kön:")
 
-        # Lägg till ett tomt alternativ i listan för könskategorier
+        
         gender_options = ["Alternativ"] + list(gender_df["Kön"].unique())
         selected_gender = st.selectbox("Välj en könskategori:", gender_options)
 
-        # Filtrera datan baserat på användarens val om ett giltigt val gjorts
+        
         if selected_gender:
             filtered_gender_df = gender_df[gender_df["Kön"] == selected_gender]
 
-            # Visa data för den valda könskategorin
             if not filtered_gender_df.empty:
                 st.markdown(f"##### Data baserat på könskategori: {selected_gender}")
                 st.write(f"- Visningar i procent: {filtered_gender_df ['Visningar_%'].values[0]}")
@@ -96,15 +92,15 @@ class AgeGenderKPI:
 
         st.markdown("##### (KPI) analys baserat på ålder:")
 
-        # Lägg till ett tomt alternativ i listan för ålderskategorier
+        
         age_options = ["Alternativ"] + list(age_df["Ålder"].unique())
         selected_age = st.selectbox("Välj en ålderskategori:", age_options)
 
-        # Filtrera datan baserat på användarens val om ett giltigt val gjorts
+        
         if selected_age:
             filtered_age_df = age_df[age_df["Ålder"] == selected_age]
 
-            # Visa data för den valda ålderskategorin
+           
             if not filtered_age_df.empty:
                 st.markdown(f"##### Data baserat på ålderskategori: {selected_age}")
                 st.write(f"- Visningar i procent: {filtered_age_df ['Visningar_%'].values[0]}")

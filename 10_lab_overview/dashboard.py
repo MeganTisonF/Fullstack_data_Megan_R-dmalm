@@ -1,6 +1,6 @@
 import streamlit as st
 from frontend.kpi import ContentKPI, AgeGenderKPI, StaderKPI
-from frontend.graphs import ViewsTrend, ViewGender, ViewAge
+from frontend.graphs import ViewsTrend, ViewGender, ViewAge, ScreenView
 from pathlib import Path
 
 # Instansiera klasserna
@@ -10,6 +10,7 @@ age_kpi = AgeGenderKPI()
 stad_kpi = StaderKPI()
 gender_graph = ViewGender()
 age_graph = ViewAge()
+screen_view=ScreenView()
 
 
 
@@ -40,10 +41,9 @@ def layout():
         
         
     with sida3:
-        st.header("KPIer för videor")
-        st.markdown("Nedan visas sammanfattning för totala antal")
         content_kpi.display_content()
         views_graph.display_plot()
+        screen_view.display_screenview_pie()
 
     with sida4:
         st.header("KPIer för orter")

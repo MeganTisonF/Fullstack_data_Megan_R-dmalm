@@ -6,7 +6,6 @@ from backend.constants import Color
 class ViewsTrend:
     def __init__(self) -> None:
         self.df = QueryDatabase("SELECT * FROM marts.views_per_date").df
-        self.stader_content = QueryDatabase("SELECT * FROM marts.content_stader_viewers").df
         print(self.df)
 
     def display_plot(self):
@@ -19,6 +18,20 @@ class ViewsTrend:
             width=4,
             color=Color.PRIMARY)) 
 
+class ScreenView:
+     def __init__(self) -> None:
+        self._content_view_screen = QueryDatabase("SELECT * FROM marts.content_screens").df
+        print(self._content_view_screen)
+
+     def display_screenview_pie(self):
+        
+        fig_screenview_pie = px.pie(self._content_view_screen, 
+                                 names="Enhetstyp", 
+                                 values="total_visningar") 
+        st.markdown("### Fördelning av visningar baserat på enhetstypen som användes av tittarna")
+        st.plotly_chart(fig_screenview_pie)
+
+
 
 
 
@@ -28,7 +41,7 @@ class ViewGender:
         print(self._gender_content)
 
     def display_gender_pie(self):
-        # Cirkeldiagram för visningsandelar baserat på kön
+        
         fig_gender_pie = px.pie(self._gender_content, 
                                  names="Kön", 
                                  values="Visningar_%") 
@@ -41,7 +54,7 @@ class ViewAge:
         print(self._age_content)
 
     def display_age_pie(self):
-        # Cirkeldiagram för visningsandelar baserat på åldersgrupper
+        
         fig_age_pie = px.pie(self._age_content, 
                              names="Ålder", 
                              values="Visningar_%") 
